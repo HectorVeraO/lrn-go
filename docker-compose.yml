@@ -1,0 +1,31 @@
+name: lrn-go
+
+services:
+  lrn-go-postgres:
+    image: postgres:17-alpine
+    container_name: lrn-go-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lrngo
+    ports:
+      - "10200:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  lrn-go-mongodb:
+    image: mongo:8.0
+    container_name: lrn-go-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - "10201:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  postgres_data:
+  mongo_data:

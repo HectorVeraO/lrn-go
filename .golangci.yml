@@ -1,0 +1,44 @@
+version: "2"
+
+run:
+  timeout: 3m
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - depguard
+
+linters-settings:
+  depguard:
+    rules:
+      prevent_cross_domain_orders:
+        list-mode: lax
+        files:
+          - "**/internal/orders/**/*.go"
+        deny:
+          - pkg: "github.com/HectorVeraO/lrn-go/internal/billing"
+            desc: "Cross-domain import forbidden: internal/orders cannot import internal/billing"
+          - pkg: "github.com/HectorVeraO/lrn-go/internal/notifications"
+            desc: "Cross-domain import forbidden: internal/orders cannot import internal/notifications"
+      prevent_cross_domain_billing:
+        list-mode: lax
+        files:
+          - "**/internal/billing/**/*.go"
+        deny:
+          - pkg: "github.com/HectorVeraO/lrn-go/internal/orders"
+            desc: "Cross-domain import forbidden: internal/billing cannot import internal/orders"
+          - pkg: "github.com/HectorVeraO/lrn-go/internal/notifications"
+            desc: "Cross-domain import forbidden: internal/billing cannot import internal/notifications"
+      prevent_cross_domain_notifications:
+        list-mode: lax
+        files:
+          - "**/internal/notifications/**/*.go"
+        deny:
+          - pkg: "github.com/HectorVeraO/lrn-go/internal/orders"
+            desc: "Cross-domain import forbidden: internal/notifications cannot import internal/orders"
+          - pkg: "github.com/HectorVeraO/lrn-go/internal/billing"
+            desc: "Cross-domain import forbidden: internal/notifications cannot import internal/billing"
