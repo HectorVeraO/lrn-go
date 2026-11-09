@@ -1,0 +1,5 @@
+[tools]
+go = "1.27.3"
+"aqua:golangci/golangci-lint" = "2.15.0"
+"aqua:sqlc-dev/sqlc" = "1.31.1"
+"aqua:pressly/goose" = "3.29.0"
